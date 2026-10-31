@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Smart Hospital Navigation System</title>
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+  <!-- ============ BACKGROUND DECOR ============ -->
+  <div class="bg-pulse"></div>
+
+  <!-- ============ HEADER ============ -->
+  <header class="site-header">
+    <div class="brand">
+      <span class="brand-mark">✚</span>
+      <div>
+        <h1>Smart Hospital Navigation</h1>
+        <p class="tagline">AI Department Prediction &amp; Shortest In-Hospital Route</p>
+      </div>
+    </div>
+
+    <div class="user-menu">
+      <div class="lang-switch">
+        <label for="langSelect" class="visually-hidden">Language</label>
+        <select id="langSelect">
+          <option value="en" selected>English</option>
+          <option value="hi">हिंदी (Hindi)</option>
+        </select>
+      </div>
+      <span class="user-name">Hi, <strong>{{ username }}</strong></span>
+      <a class="logout-link" href="{{ url_for('logout') }}">Log out</a>
+    </div>
+  </header>
+
+  <!-- ============ MAIN LAYOUT ============ -->
+  <main class="layout">
+
+    <!-- LEFT: Input Panel -->
+    <section class="panel input-panel">
+      <h2 data-en="Pick your symptoms" data-hi="अपने लक्षण चुनें">Pick your symptoms</h2>
+      <p class="hint" data-en="Search from 132 known symptoms for the most accurate result."
+         data-hi="सबसे सटीक परिणाम के लिए 132 ज्ञात लक्षणों में से खोजें।">
+        Search from 132 known symptoms for the most accurate result.
+      </p>
+
+      <div class="picker-wrap">
+        <input
+          type="text"
+          id="symptomSearch"
+          class="symptom-search"
+          placeholder="Start typing e.g. 'fever', 'rash', 'chest'..."
+          autocomplete="off"
+        />
+        <div id="suggestionList" class="suggestion-list hidden"></div>
+      </div>
+
+      <div id="selectedSymptoms" class="selected-symptoms"></div>
+
+      <div class="divider-or">
+        <span data-en="OR describe in your own words" data-hi="या अपने शब्दों में बताएं">OR describe in your own words</span>
+      </div>
+
+      <textarea
+        id="symptomsInput"
+        rows="5"
+        placeholder="e.g. chest pain and shortness of breath"
+        data-ph-en="e.g. chest pain and shortness of breath"
+        data-ph-hi="जैसे: सीने में दर्द और सांस लेने में तकलीफ"
+      ></textarea>
+
+      <div id="errorBox" class="error-box hidden"></div>
+
+      <button id="predictBtn" class="cta-btn">
+        <span class="btn-label" data-en="Find My Department" data-hi="मेरा विभाग खोजें">Find My Department</span>
+        <span class="btn-spinner hidden"></span>
+      </button>
+
+      <div class="quick-examples">
+        <p class="hint" data-en="Try an example:" data-hi="एक उदाहरण आज़माएं:">Try an example:</p>
+        <div class="chip-row">
+          <button class="chip" data-value="chest pain and shortness of breath">Chest pain</button>
+          <button class="chip" data-value="severe back pain">Back pain</button>
+          <button class="chip" data-value="skin rash and itching">Skin rash</button>
+          <button class="chip" data-value="child fever and irritability">Child fever</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- RIGHT: Results Panel -->
+    <section class="panel result-panel">
+      <div id="emptyState" class="empty-state">
+        <div class="empty-icon">🏥</div>
+        <p data-en="Your predicted department and route will appear here."
+           data-hi="आपका अनुमानित विभाग और मार्ग यहाँ दिखाई देगा।">
+          Your predicted department and route will appear here.
+        </p>
+      </div>
+
+      <div id="resultState" class="result-state hidden">
+        <div class="result-header">
+          <span class="eyebrow" data-en="PREDICTED DEPARTMENT" data-hi="अनुमानित विभाग">PREDICTED DEPARTMENT</span>
+          <h2 id="departmentName">--</h2>
+          <div class="confidence-row">
+            <div class="confidence-bar"><div id="confidenceFill" class="confidence-fill"></div></div>
+            <span id="confidenceText">--%</span>
+          </div>
+        </div>
+
+        <div class="matched-symptoms-box">
+          <strong data-en="Understood symptoms:" data-hi="पहचाने गए लक्षण:">Understood symptoms:</strong>
+          <span id="matchedSymptomsText">--</span>
+        </div>
+
+        <div class="route-summary">
+          <div class="route-stat">
+            <span class="stat-num" id="distanceStat">--</span>
+            <span class="stat-label" data-en="meters" data-hi="मीटर">meters</span>
+          </div>
+          <div class="route-stat">
+            <span class="stat-num" id="stopsStat">--</span>
+            <span class="stat-label" data-en="stops" data-hi="पड़ाव">stops</span>
+          </div>
+        </div>
+
+        <h3 class="route-title" data-en="Route from Entrance" data-hi="प्रवेश द्वार से मार्ग">Route from Entrance</h3>
+        <ol id="pathList" class="path-list"></ol>
+
+        <h3 class="route-title" data-en="Hospital Map" data-hi="अस्पताल का नक्शा">Hospital Map</h3>
+        <p class="hint" data-en="Scroll to zoom, drag to pan, hover a room for details."
+           data-hi="ज़ूम के लिए स्क्रॉल करें, घुमाने के लिए खींचें, विवरण के लिए कमरे पर होवर करें।">
+          Scroll to zoom, drag to pan, hover a room for details.
+        </p>
+        <div class="map-toolbar">
+          <button type="button" class="map-btn" id="zoomInBtn">+ Zoom</button>
+          <button type="button" class="map-btn" id="zoomOutBtn">− Zoom</button>
+          <button type="button" class="map-btn" id="resetMapBtn">Reset</button>
+        </div>
+        <div class="map-svg-wrap">
+    <svg id="mapSvg" class="map-svg" viewBox="0 0 620 420"></svg>
+    <div id="mapTooltip" class="map-tooltip"></div>
+</div>
+
+<!-- Book Appointment Button -->
+
+<div style="text-align:center; margin-top:30px;">
+   <a href="{{ url_for('appointment', tab_id=tab_id) }}" class="cta-btn">
+    📅 Book Appointment
+</a>
+</div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>Built with Python · scikit-learn · Flask · Dijkstra&rsquo;s Algorithm</p>
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

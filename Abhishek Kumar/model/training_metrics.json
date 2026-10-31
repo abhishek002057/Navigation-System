@@ -1,0 +1,23 @@
+{
+  "model_used": "Naive Bayes (Bernoulli)",
+  "cross_validation_scores": {
+    "Naive Bayes (Bernoulli)": 100.0,
+    "Logistic Regression": 100.0,
+    "Random Forest": 100.0,
+    "Linear SVM": 100.0
+  },
+  "test_accuracy": 100.0,
+  "num_training_rows": 3936,
+  "num_test_rows": 984,
+  "num_symptoms": 132,
+  "departments": [
+    "Cardiology",
+    "Dermatology",
+    "ENT",
+    "Gastroenterology",
+    "General Medicine",
+    "Neurology",
+    "Orthopedic",
+    "Urology"
+  ]
+}

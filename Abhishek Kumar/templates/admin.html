@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Admin Dashboard</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body{
+  background: #eef7ff;
+}
+
+/* ================= HEADER SECTION ================= */
+
+.header{
+  width: 90%;
+  margin: 30px auto;
+  background: white;
+  padding: 25px 40px;
+  border-radius: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 10px 25px rgba(0,0,0,.1);
+}
+
+.header h1{
+  color: #2563eb;
+}
+
+.header p{
+  margin-top: 8px;
+  color: #666;
+}
+
+.logout{
+  background: #ef4444;
+  padding: 12px 25px;
+  color: white;
+  text-decoration: none;
+  border-radius: 10px;
+  font-weight: 600;
+  transition: .3s;
+}
+
+.logout:hover{
+  background: #dc2626;
+}
+
+/* ================= STAT CARDS ================= */
+
+.cards{
+  width: 90%;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 25px;
+}
+
+.card{
+  background: white;
+  padding: 25px;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 8px 20px rgba(0,0,0,.08);
+  transition: .4s;
+}
+
+.card:hover{
+  transform: translateY(-8px);
+}
+
+.card img{
+  width: 70px;
+  margin-bottom: 15px;
+}
+
+.card h2{
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.number{
+  font-size: 35px;
+  font-weight: bold;
+  color: #2563eb;
+}
+
+.btn{
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 25px;
+  background: #2563eb;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: .3s;
+}
+
+.btn:hover{
+  background: #1d4ed8;
+}
+
+/* ================= MANAGEMENT TABLES ================= */
+
+.dashboard-section{
+  width: 90%;
+  margin: 40px auto;
+}
+
+.section-header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.section-title{
+  font-size: 28px;
+  color: #2563eb;
+}
+
+.add-btn{
+  padding: 12px 24px;
+  background: #16a34a;
+  color: white;
+  text-decoration: none;
+  border-radius: 10px;
+  font-weight: 600;
+  transition: .3s;
+}
+
+.add-btn:hover{
+  background: #15803d;
+}
+
+.search-box{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.search-box input{
+  width: 350px;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  outline: none;
+  font-size: 15px;
+}
+
+.search-box button{
+  padding: 12px 25px;
+  border: none;
+  background: #2563eb;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: .3s;
+}
+
+.search-box button:hover{
+  background: #1d4ed8;
+}
+
+table{
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0,0,0,.08);
+}
+
+th{
+  background: #2563eb;
+  color: white;
+  padding: 15px;
+  text-align: center;
+}
+
+td{
+  padding: 15px;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+  color: #444;
+}
+
+tr:hover{
+  background: #f4f9ff;
+}
+
+.badge{
+  padding: 6px 14px;
+  border-radius: 20px;
+  color: white;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.active{ background: #16a34a; }
+.on-leave{ background: #f59e0b; }
+.full{ background: #ef4444; }
+
+.action{
+  padding: 8px 14px;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 13px;
+  margin: 0 2px;
+  transition: .3s;
+}
+
+.action-edit{ background: #2563eb; }
+.action-edit:hover{ background: #1d4ed8; }
+
+.action-delete{ background: #ef4444; }
+.action-delete:hover{ background: #dc2626; }
+
+/* ================= ANALYTICS & SYSTEM STATUS ================= */
+
+.extra-section{
+  width: 90%;
+  margin: 40px auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 25px;
+}
+
+.chart-box,
+.notify-box{
+  background: #fff;
+  border-radius: 20px;
+  padding: 25px;
+  box-shadow: 0 10px 25px rgba(0,0,0,.08);
+}
+
+.chart-box h2,
+.notify-box h2{
+  color: #2563eb;
+  margin-bottom: 20px;
+}
+
+.bar{
+  margin: 18px 0;
+}
+
+.bar-title{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+.progress{
+  width: 100%;
+  height: 12px;
+  background: #e5e7eb;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.fill{
+  height: 100%;
+  background: #2563eb;
+  border-radius: 20px;
+}
+
+.notice{
+  padding: 15px;
+  background: #f4f9ff;
+  margin-bottom: 15px;
+  border-left: 5px solid #2563eb;
+  border-radius: 10px;
+}
+
+.notice h4{
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.notice p{
+  color: #666;
+  font-size: 14px;
+}
+
+/* ================= QUICK SYSTEM CONTROLS ================= */
+
+.quick-controls{
+  width: 90%;
+  margin: 40px auto;
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0,0,0,.08);
+}
+
+.quick-controls h2{
+  color: #2563eb;
+  margin-bottom: 20px;
+}
+
+.grid-3{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.info-card{
+  background: #eef6ff;
+  padding: 20px;
+  border-radius: 15px;
+  text-align: center;
+  transition: .3s;
+  cursor: pointer;
+}
+
+.info-card:hover{
+  background: #2563eb;
+  color: white;
+}
+
+.info-card:hover h3,
+.info-card:hover p{
+  color: white;
+}
+
+.info-card h3{
+  color: #2563eb;
+  margin-bottom: 8px;
+}
+
+.info-card p{
+  color: #555;
+  font-size: 14px;
+}
+
+@media(max-width: 900px){
+  .extra-section,
+  .grid-3{
+    grid-template-columns: 1fr;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- Header -->
+<div class="header">
+  <div>
+    <h1>Admin Console</h1>
+    <p>Smart Hospital Navigation & Management System</p>
+  </div>
+  <a href="{{ url_for('logout') }}" class="logout">Logout</a>
+</div>
+
+<!-- Key Stat Cards -->
+<div class="cards">
+  <div class="card">
+    <img src="https://cdn-icons-png.flaticon.com/512/2785/2785482.png" alt="Doctors">
+    <h2>Total Doctors</h2>
+    <div class="number">32</div>
+    <a href="#doctors" class="btn">Manage</a>
+  </div>
+
+  <div class="card">
+    <img src="https://cdn-icons-png.flaticon.com/512/2966/2966483.png" alt="Patients">
+    <h2>Total Patients</h2>
+    <div class="number">1,240</div>
+    <a href="#patients" class="btn">View All</a>
+  </div>
+
+  <div class="card">
+    <img src="https://cdn-icons-png.flaticon.com/512/4320/4320371.png" alt="Departments">
+    <h2>Departments</h2>
+    <div class="number">12</div>
+    <a href="#" class="btn">Configure</a>
+  </div>
+
+  <div class="card">
+    <img src="https://cdn-icons-png.flaticon.com/512/3209/3209265.png" alt="Navigation Nodes">
+    <h2>Map Nodes</h2>
+    <div class="number">85</div>
+    <a href="{{ url_for('predict_page') }}" class="btn">Edit Map</a>
+  </div>
+</div>
+
+<!-- Doctor Management Section -->
+<div class="dashboard-section" id="doctors">
+  <div class="section-header">
+    <h2 class="section-title">Doctor Management</h2>
+    <a href="#" class="add-btn">+ Add New Doctor</a>
+  </div>
+
+  <div class="search-box">
+    <input type="text" placeholder="Search Doctor by name or department...">
+    <button>Search</button>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Doctor Name</th>
+        <th>Department</th>
+        <th>Specialization</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>DOC-101</td>
+        <td>Dr. Rajesh Verma</td>
+        <td>Cardiology</td>
+        <td>MD, DM</td>
+        <td><span class="badge active">Active</span></td>
+        <td>
+          <a href="#" class="action action-edit">Edit</a>
+          <a href="#" class="action action-delete">Remove</a>
+        </td>
+      </tr>
+      <tr>
+        <td>DOC-102</td>
+        <td>Dr. Sunita Patel</td>
+        <td>Neurology</td>
+        <td>MBBS, M.Ch</td>
+        <td><span class="badge active">Active</span></td>
+        <td>
+          <a href="#" class="action action-edit">Edit</a>
+          <a href="#" class="action action-delete">Remove</a>
+        </td>
+      </tr>
+      <tr>
+        <td>DOC-103</td>
+        <td>Dr. Anil Kapoor</td>
+        <td>Orthopedics</td>
+        <td>MS (Orthopedics)</td>
+        <td><span class="badge on-leave">On Leave</span></td>
+        <td>
+          <a href="#" class="action action-edit">Edit</a>
+          <a href="#" class="action action-delete">Remove</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- System Analytics & Live Alerts -->
+<div class="extra-section">
+  <!-- Analytics Chart -->
+  <div class="chart-box">
+    <h2>Department Traffic Load</h2>
+
+    <div class="bar">
+      <div class="bar-title">
+        <span>Cardiology</span>
+        <span>85% Capacity</span>
+      </div>
+      <div class="progress">
+        <div class="fill" style="width:85%"></div>
+      </div>
+    </div>
+
+    <div class="bar">
+      <div class="bar-title">
+        <span>OPD / General Medicine</span>
+        <span>95% Capacity</span>
+      </div>
+      <div class="progress">
+        <div class="fill" style="width:95%"></div>
+      </div>
+    </div>
+
+    <div class="bar">
+      <div class="bar-title">
+        <span>Orthopedics</span>
+        <span>60% Capacity</span>
+      </div>
+      <div class="progress">
+        <div class="fill" style="width:60%"></div>
+      </div>
+    </div>
+
+    <div class="bar">
+      <div class="bar-title">
+        <span>Neurology</span>
+        <span>45% Capacity</span>
+      </div>
+      <div class="progress">
+        <div class="fill" style="width:45%"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notifications / Audit Logs -->
+  <div class="notify-box">
+    <h2>System Alerts</h2>
+
+    <div class="notice">
+      <h4>New Staff Registration</h4>
+      <p>Dr. Sunita Patel requested account activation.</p>
+    </div>
+
+    <div class="notice">
+      <h4>Navigation Node Updated</h4>
+      <p>Floor 2 map updated by Admin.</p>
+    </div>
+
+    <div class="notice">
+      <h4>System Backup</h4>
+      <p>Database auto-backup completed at 03:00 AM.</p>
+    </div>
+
+    <div class="notice">
+      <h4>High OPD Traffic</h4>
+      <p>OPD waiting time exceeds 30 mins.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Quick Administration Controls -->
+<div class="quick-controls">
+  <h2>Quick Administration Tools</h2>
+  <div class="grid-3">
+    <div class="info-card">
+      <h3>🗺️ Map Editor</h3>
+      <p>Add, edit, or recalibrate indoor navigation paths and departmental beacons.</p>
+    </div>
+    <div class="info-card">
+      <h3>🤖 AI Model Retraining</h3>
+      <p>Update the symptom-to-department prediction model with new patient data.</p>
+    </div>
+    <div class="info-card">
+      <h3>🔒 Access Controls</h3>
+      <p>Manage permissions for doctors, staff, and system administrators.</p>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

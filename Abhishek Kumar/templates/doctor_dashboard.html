@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Doctor Dashboard</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: #eef7ff;
+            color: #333;
+        }
+
+        .header {
+            width: 90%;
+            margin: 30px auto;
+            background: white;
+            padding: 25px 40px;
+            border-radius: 20px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            box-shadow: 0 10px 25px rgba(0,0,0,.1);
+        }
+
+        .header h1 {
+            color: #2563eb;
+            font-size: 28px;
+        }
+
+        .header p {
+            margin-top: 8px;
+            color: #666;
+        }
+
+        .logout {
+            background: #ef4444;
+            padding: 12px 25px;
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        .logout:hover {
+            background: #dc2626;
+        }
+
+        .cards {
+            width: 90%;
+            margin: auto;
+
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            text-align: center;
+
+            box-shadow: 0 8px 20px rgba(0,0,0,.08);
+
+            transition: .3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card img {
+            width: 65px;
+            height: 65px;
+            object-fit: contain;
+            margin-bottom: 15px;
+        }
+
+        .card h2 {
+            font-size: 17px;
+            margin-bottom: 10px;
+        }
+
+        .number {
+            font-size: 35px;
+            font-weight: bold;
+            color: #2563eb;
+        }
+
+        .btn {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 9px 22px;
+
+            background: #2563eb;
+            color: white;
+
+            text-decoration: none;
+            border-radius: 8px;
+        }
+
+        .dashboard-section {
+            width: 90%;
+            margin: 40px auto;
+        }
+
+        .section-title {
+            font-size: 28px;
+            color: #2563eb;
+            margin-bottom: 20px;
+        }
+
+        .search-box {
+            margin-bottom: 20px;
+        }
+
+        .search-box input {
+            width: 350px;
+            padding: 12px 15px;
+
+            border: 1px solid #ddd;
+            border-radius: 10px;
+
+            outline: none;
+            font-size: 15px;
+        }
+
+        .search-box input:focus {
+            border: 2px solid #2563eb;
+        }
+
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+
+            background: white;
+
+            border-radius: 20px;
+            overflow: hidden;
+
+            box-shadow: 0 8px 20px rgba(0,0,0,.08);
+        }
+
+        th {
+            background: #2563eb;
+            color: white;
+            padding: 15px;
+        }
+
+        td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+
+        tbody tr:hover {
+            background: #f4f9ff;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 7px 14px;
+            border-radius: 20px;
+
+            color: white;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .pending {
+            background: #f59e0b;
+        }
+
+        .completed {
+            background: #16a34a;
+        }
+
+        .called {
+            background: #2563eb;
+        }
+
+        .approved {
+            background: #10b981;
+        }
+
+        .cancelled {
+            background: #ef4444;
+        }
+
+        .action {
+            display: inline-block;
+
+            padding: 8px 18px;
+
+            background: #2563eb;
+            color: white;
+
+            text-decoration: none;
+            border-radius: 8px;
+
+            font-size: 13px;
+        }
+
+        .action:hover {
+            background: #1d4ed8;
+        }
+
+        .bottom-section {
+            width: 90%;
+            margin: 40px auto;
+
+            display: grid;
+            grid-template-columns: 350px 1fr;
+
+            gap: 30px;
+        }
+
+        .profile-card,
+        .activity {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+
+            box-shadow: 0 8px 20px rgba(0,0,0,.08);
+        }
+
+        .profile-card {
+            text-align: center;
+        }
+
+        .profile-card img {
+            width: 120px;
+            height: 120px;
+
+            border-radius: 50%;
+
+            border: 5px solid #2563eb;
+
+            margin-bottom: 20px;
+
+            object-fit: cover;
+        }
+
+        .profile-card h2 {
+            color: #2563eb;
+            margin-bottom: 15px;
+        }
+
+        .profile-card p {
+            color: #666;
+            margin: 9px 0;
+        }
+
+        .profile-card hr {
+            margin: 20px 0;
+            border: none;
+            border-top: 1px solid #eee;
+        }
+
+        .profile-btn {
+            display: block;
+
+            width: 100%;
+
+            padding: 12px;
+
+            margin-top: 12px;
+
+            background: #2563eb;
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 10px;
+
+            font-weight: bold;
+        }
+
+        .activity h2 {
+            color: #2563eb;
+            margin-bottom: 20px;
+        }
+
+        .timeline {
+            list-style: none;
+        }
+
+        .timeline li {
+            padding: 16px;
+
+            margin-bottom: 12px;
+
+            background: #f5f9ff;
+
+            border-left: 5px solid #2563eb;
+
+            border-radius: 10px;
+        }
+
+        .timeline span {
+            font-size: 13px;
+            color: #888;
+        }
+
+        .quick-grid {
+            margin-top: 25px;
+
+            display: grid;
+
+            grid-template-columns: repeat(2, 1fr);
+
+            gap: 20px;
+        }
+
+        .quick-card {
+            background: #eef6ff;
+
+            padding: 20px;
+
+            text-align: center;
+
+            border-radius: 15px;
+
+            transition: .3s;
+
+            cursor: pointer;
+
+            text-decoration: none;
+
+            color: #333;
+        }
+
+        .quick-card:hover {
+            transform: scale(1.03);
+
+            background: #2563eb;
+
+            color: white;
+        }
+
+        .quick-card .icon {
+            font-size: 32px;
+        }
+
+        .quick-card h3 {
+            margin-top: 8px;
+        }
+
+        .no-data {
+            padding: 40px !important;
+            text-align: center !important;
+            color: #888;
+        }
+
+        @media (max-width: 1100px) {
+
+            .cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .bottom-section {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 700px) {
+
+            .header {
+                width: 95%;
+                padding: 20px;
+
+                flex-direction: column;
+                gap: 20px;
+
+                align-items: flex-start;
+            }
+
+            .cards {
+                width: 95%;
+                grid-template-columns: 1fr;
+            }
+
+            .dashboard-section,
+            .bottom-section {
+                width: 95%;
+            }
+
+            .search-box input {
+                width: 100%;
+            }
+
+            .quick-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+<!-- HEADER -->
+
+<div class="header">
+
+    <div>
+
+        <h1>
+            Welcome Dr. {{ current_user.username }}
+        </h1>
+
+        <p>
+            Smart Hospital Navigation System
+        </p>
+
+    </div>
+
+    <a href="{{ url_for('logout') }}" class="logout">
+        Logout
+    </a>
+
+</div>
+
+
+<!-- DASHBOARD CARDS -->
+
+<div class="cards">
+
+
+    <!-- TODAY -->
+
+    <div class="card">
+
+        <img src="https://cdn-icons-png.flaticon.com/512/2966/2966483.png">
+
+        <h2>Today's Patients</h2>
+
+        <div class="number">
+            {{ today_patients }}
+        </div>
+
+        <a href="#appointments" class="btn">
+            View
+        </a>
+
+    </div>
+
+
+    <!-- PENDING -->
+
+    <div class="card">
+
+        <img src="https://cdn-icons-png.flaticon.com/512/2785/2785819.png">
+
+        <h2>Pending Appointments</h2>
+
+        <div class="number">
+            {{ pending_appointments }}
+        </div>
+
+        <a href="#appointments" class="btn">
+            Open
+        </a>
+
+    </div>
+
+
+    <!-- COMPLETED -->
+
+    <div class="card">
+
+        <img src="https://cdn-icons-png.flaticon.com/512/4320/4320371.png">
+
+        <h2>Completed</h2>
+
+        <div class="number">
+            {{ completed_appointments }}
+        </div>
+
+        <a href="#appointments" class="btn">
+            History
+        </a>
+
+    </div>
+
+
+    <!-- PATIENT RECORDS -->
+
+    <div class="card">
+
+        <img src="https://cdn-icons-png.flaticon.com/512/3209/3209265.png">
+
+        <h2>Patient Records</h2>
+
+        <div class="number">
+            {{ patient_records }}
+        </div>
+
+        <a href="#appointments" class="btn">
+            View
+        </a>
+
+    </div>
+
+</div>
+
+
+<!-- APPOINTMENTS -->
+
+<div class="dashboard-section" id="appointments">
+
+    <h2 class="section-title">
+        Appointments
+    </h2>
+
+    <div class="search-box">
+
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Search patient, token or department..."
+        >
+
+    </div>
+
+
+    <div class="table-container">
+
+        <table id="appointmentTable">
+
+            <thead>
+
+                <tr>
+
+                    <th>Token</th>
+                    <th>Patient</th>
+                    <th>Department</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Status</th>
+                    <th>Action</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for app in appointments %}
+
+                <tr class="appointment-row">
+
+                    <td>
+                        <b>{{ app.token }}</b>
+                    </td>
+
+                    <td>
+                        {{ app.patient_name }}
+                    </td>
+
+                    <td>
+                        {{ app.department or "Not Assigned" }}
+                    </td>
+
+                    <td>
+                        {{ app.appointment_date }}
+                    </td>
+
+                    <td>
+                        {{ app.appointment_time or "Not Set" }}
+                    </td>
+
+                    <td>
+
+                        {% if app.status == "Completed" %}
+
+                            <span class="status completed">
+                                Completed
+                            </span>
+
+                        {% elif app.status == "Called" %}
+
+                            <span class="status called">
+                                Called
+                            </span>
+
+                        {% elif app.status == "Approved" %}
+
+                            <span class="status approved">
+                                Approved
+                            </span>
+
+                        {% elif app.status == "Cancelled" %}
+
+                            <span class="status cancelled">
+                                Cancelled
+                            </span>
+
+                        {% else %}
+
+                            <span class="status pending">
+                                {{ app.status or "Pending" }}
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+                    <td>
+
+    {% if app.status == "Pending" %}
+
+        <form
+            method="POST"
+            action="{{ url_for('approve_appointment', id=app.id, tab_id=tab_id) }}"
+            style="
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                gap:8px;
+                flex-wrap:wrap;
+            "
+        >
+
+            <input
+                type="time"
+                name="appointment_time"
+                required
+                style="
+                    padding:8px 10px;
+                    border:1px solid #ddd;
+                    border-radius:8px;
+                    font-family:Poppins,sans-serif;
+                    font-size:13px;
+                "
+            >
+
+            <button
+                type="submit"
+                class="action"
+                style="
+                    border:none;
+                    cursor:pointer;
+                "
+            >
+                Approve
+            </button>
+
+        </form>
+
+    {% elif app.status == "Approved" %}
+
+        <a
+            href="{{ url_for('call_patient', id=app.id, tab_id=tab_id) }}"
+            class="action"
+        >
+            📞 Call Patient
+        </a>
+
+    {% elif app.status == "Called" %}
+
+        <span class="status called">
+            📞 Patient Called
+        </span>
+
+    {% elif app.status == "Completed" %}
+
+        <span class="status completed">
+            Completed
+        </span>
+
+    {% elif app.status == "Cancelled" %}
+
+        <span class="status cancelled">
+            Cancelled
+        </span>
+
+    {% else %}
+
+        —
+
+    {% endif %}
+
+</td>
+
+                </tr>
+
+                {% else %}
+
+                <tr>
+
+                    <td colspan="7" class="no-data">
+
+                        No appointments found.
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+
+<!-- PROFILE + ACTIVITY -->
+
+<div class="bottom-section">
+
+
+    <!-- DOCTOR PROFILE -->
+
+    <div class="profile-card">
+
+        <img
+            src="https://cdn-icons-png.flaticon.com/512/2785/2785482.png"
+            alt="Doctor"
+        >
+
+        <h2>
+            Dr. {{ current_user.username }}
+        </h2>
+
+        <p>
+            <b>Department:</b>
+            {{ doctor_department }}
+        </p>
+
+        <p>
+            <b>Role:</b>
+            Doctor
+        </p>
+
+        <p>
+            <b>Hospital:</b>
+            Smart Hospital
+        </p>
+
+        <p>
+            <b>Patient Records:</b>
+            {{ patient_records }}
+        </p>
+
+        <hr>
+
+        <a href="#appointments" class="profile-btn">
+            Patient History
+        </a>
+
+        <a href="#appointments" class="profile-btn">
+            View Appointments
+        </a>
+
+    </div>
+
+
+    <!-- ACTIVITY -->
+
+    <div class="activity">
+
+        <h2>
+            Recent Activity
+        </h2>
+
+        <ul class="timeline">
+
+            {% for activity in recent_activity %}
+
+            <li>
+
+                {% if activity.status == "Completed" %}
+
+                    Patient
+                    <b>{{ activity.patient_name }}</b>
+                    appointment completed.
+
+                {% elif activity.status == "Called" %}
+
+                    Patient
+                    <b>{{ activity.patient_name }}</b>
+                    has been called.
+
+                {% elif activity.status == "Approved" %}
+
+                    Appointment accepted for
+                    <b>{{ activity.patient_name }}</b>.
+
+                {% elif activity.status == "Cancelled" %}
+
+                    Appointment cancelled for
+                    <b>{{ activity.patient_name }}</b>.
+
+                {% else %}
+
+                    New appointment for
+                    <b>{{ activity.patient_name }}</b>.
+
+                {% endif %}
+
+                <br>
+
+                <span>
+
+                    {{ activity.appointment_date }}
+
+                    {% if activity.appointment_time %}
+                        | {{ activity.appointment_time }}
+                    {% endif %}
+
+                </span>
+
+            </li>
+
+            {% else %}
+
+            <li>
+                No recent activity.
+            </li>
+
+            {% endfor %}
+
+        </ul>
+
+
+        <!-- QUICK ACTIONS -->
+
+        <div class="quick-grid">
+
+            <a href="#appointments" class="quick-card">
+
+                <div class="icon">
+                    🏥
+                </div>
+
+                <h3>
+                    Today's Patients
+                </h3>
+
+            </a>
+
+
+            <a href="#appointments" class="quick-card">
+
+                <div class="icon">
+                    💊
+                </div>
+
+                <h3>
+                    Patient Records
+                </h3>
+
+            </a>
+
+
+            <a href="#appointments" class="quick-card">
+
+                <div class="icon">
+                    📋
+                </div>
+
+                <h3>
+                    Medical History
+                </h3>
+
+            </a>
+
+
+            <a href="#appointments" class="quick-card">
+
+                <div class="icon">
+                    📞
+                </div>
+
+                <h3>
+                    Patient Calls
+                </h3>
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- SEARCH -->
+
+<script>
+
+const searchInput = document.getElementById("searchInput");
+
+searchInput.addEventListener("keyup", function () {
+
+    const filter = searchInput.value.toLowerCase();
+
+    const rows = document.querySelectorAll(
+        "#appointmentTable tbody .appointment-row"
+    );
+
+    rows.forEach(function(row) {
+
+        const text = row.textContent.toLowerCase();
+
+        row.style.display =
+            text.includes(filter) ? "" : "none";
+
+    });
+
+});
+
+</script>
+
+
+</body>
+
+</html>
+```

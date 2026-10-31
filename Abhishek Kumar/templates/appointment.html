@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Book Appointment | DrMeet</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#f4f9ff;
+}
+
+.header{
+background:#0d6efd;
+color:white;
+padding:15px;
+text-align:center;
+font-size:28px;
+font-weight:bold;
+}
+
+.appointment{
+width:90%;
+margin:60px auto;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:50px;
+align-items:center;
+}
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Body Style */
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+  }
+  
+  /* Address Bar */
+  .address {
+    background-color: #2a3b45;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    flex-wrap: wrap;
+  }
+  
+  .address a {
+    color: white;
+    text-decoration: none;
+    margin-right: 10px;
+  }
+  
+   .address i {
+   
+    margin-right: 10px;
+  }
+  #instagram{
+    color: #e50808;
+  }
+   #facebook {
+    color: #0b61ea;
+    margin-right: 10px;
+  }
+  .address {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 10px;
+    font-size: 1rem;
+   
+  }
+  
+  .location {
+    display: flex;
+    align-items: last baseline;
+    gap: 8px;
+    color: #ffffff;
+    
+  }
+  
+   .location i {
+    color: red; /* Or any color for the location icon */
+    font-size: 1rem;
+  }
+  
+  
+  
+  /* Header */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color:  #2e989c;;
+    padding: 15px 30px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    flex-wrap: wrap;
+  }
+  
+  .header-h1 {
+    display: flex;
+    align-items: center;
+  }
+  
+  #image {
+    height: 60px;
+    width: 60px;
+    margin-right: 15px;
+  }
+  
+  #heading {
+    font-size: 40px;
+    color:#001e4a;
+    font-weight: bold;
+  }
+  
+  /* Navigation Links */
+  .nav-links {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .nav-links a {
+    color:  #042a53;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+  
+  .nav-links a:hover {
+    color: #44494d;
+  }
+  
+  /* best doctor team */
+  .image-overlay-container {
+    position: relative;
+    width: 100%;
+    max-height: 500px;
+    overflow: hidden;
+  }
+  
+  .banner-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+  }
+  
+  .overlay-full {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* black transparent cover */
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* align text to the left */
+    padding-left: 5%;
+  }
+  
+  .overlay-text {
+    color: white;
+    max-width: 50%;
+  }
+  
+  .overlay-heading {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+  
+  .overlay-description {
+    font-size: 1rem;
+    margin: 0;
+  }
+  
+  
+  /* Responsive */
+  @media screen and (max-width: 768px) {
+    .header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .nav-links {
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 10px;
+    }
+  
+    .address {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 5px;
+    }
+  
+    .carousel-inner img {
+      height: 250px;
+    }
+  }
+  body {
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+  }
+  .container-fluid {
+    display: grid;
+    grid-template-columns: 40% 60%; /* 60% for left, 40% for right */
+    width: 100%;
+  }
+  .left-content{
+   
+    background-color: #ffffff;
+    padding: 100px;
+      margin: 70px 30px 70px 30px;
+      border-radius: 30px;
+  }
+  .left-content-heading{
+    margin-top: -100px;
+    font-size: 45px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    color: #001e4a;
+    position: relative;
+  }
+  #LH2{
+    position: relative;
+    
+    font-size: 30px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    color: #001e4a;
+    
+  }
+  #LH3{
+    
+    font-size: 30px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    color: #001e4a;
+    position: relative;
+  }
+  #text{
+    font-size: 20px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    color: #1157c1;
+    margin-top: 30px;
+    position: relative;
+  }
+  #text-1{
+    font-size: 20px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    color: #1157c1;
+    margin-top: 30px;
+    position: relative;
+    margin-bottom: 0px;
+  }
+  .lrft-content-image{
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+  }
+  .stats-box {
+    
+    width: 70%;
+    margin: 70px; /* Top, Right, Bottom, Left */
+    background: linear-gradient(135deg, #00a79d, #2cb7b0);
+    border-radius: 12px;
+    color: white;
+    padding: 40px 30px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+  
+  .stat-block {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 20px 0;
+  }
+  
+  .stat-block:last-child {
+    border-bottom: none;
+  }
+  
+  .stat-number {
+    font-size: 28px;
+    font-weight: 700;
+  }
+  
+  .stat-label {
+    font-size: 14px;
+    text-transform: uppercase;
+    margin-top: 4px;
+    opacity: 0.9;
+  }
+  
+  @media (max-width: 768px) {
+    .stats-box {
+      width: 90%;
+      padding: 30px 20px;
+    }
+  }
+  /* css for speciality section */
+  /* Custom Styles for Specialties Section */
+  .specialties-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin-bottom: 2em;
+  }
+  
+  .specialties-image img {
+    width: 400px;       
+    height: 300px;     
+    object-fit: cover;  
+    border-radius: 8px;
+    border-bottom: #0b61ea;
+    margin-bottom: 2em; 
+  }
+  
+  
+  /* Make tabs/description adjust to image size */
+  .specialties-tabs {
+    flex: 1;
+    min-width: 300px;
+  }
+  
+  .specialty-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #42bebe;
+    text-align: center;
+    margin-right: 500px;
+  }
+  h3 {
+    font-weight: 600;
+    font-size: 28px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  
+  .specialty-description {
+    margin-right: 33%;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+  
+  .nav-pills .nav-link {
+    font-size: 16px;
+    text-align: center;
+    color: #42bebe;
+    margin-bottom: 8px;
+    transition: all 0.3s ease;
+    border-radius: 0.5rem;
+  }
+  
+  .nav-pills .nav-link.active {
+    background-color: #0aedc3;
+    color: white;
+  }
+  
+  .icon {
+    margin-right: 8px;
+    font-size: 18px;
+  }
+  
+  .btn-book {
+    background-color: #0aedc3;
+    border: none;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn-book:hover {
+    background-color:   #0aedc3;
+  
+  }
+  
+  /* Responsive Behavior */
+  @media (max-width: 768px) {
+    .specialties-container {
+      flex-direction: column;
+    }
+   
+  
+    .specialties-image,
+    .specialties-tabs {
+      width: 100%;
+    }
+  
+    .nav-pills {
+      flex-direction: row;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+  
+    .nav-pills .nav-link {
+      margin-right: 10px;
+      margin-bottom: 0;
+    }
+  
+    .tab-content {
+      margin-top: 20px;
+    }
+  }
+ 
+  
+ .specialties-section{
+    background:#f8fbff;
+}
+
+.section-title{
+    color:#0f56a1;
+    font-size:42px;
+}
+
+.image-box img{
+    width:100%;
+    height:500px;
+    object-fit:cover;
+    border-radius:20px;
+    box-shadow:0 15px 40px rgba(0,0,0,.15);
+    transition:.5s;
+}
+
+.image-box img:hover{
+    transform:scale(1.03);
+}
+
+.nav-pills .nav-link{
+
+    background:white;
+    margin-bottom:15px;
+    color:#444;
+    border-radius:12px;
+    padding:16px;
+    font-weight:600;
+    text-align:left;
+    transition:.4s;
+    border-left:5px solid transparent;
+
+}
+
+.nav-pills .nav-link:hover{
+
+    transform:translateX(8px);
+    background:#eef5ff;
+
+}
+
+.nav-pills .nav-link.active{
+
+    background:#0f56a1;
+    color:white;
+    border-left:5px solid #00d4ff;
+
+}
+
+.specialty-card{
+
+    background:white;
+    border-radius:20px;
+    padding:35px;
+    box-shadow:0 15px 40px rgba(0,0,0,.08);
+
+}
+
+.specialty-card h3{
+
+    color:#0f56a1;
+    font-weight:bold;
+    margin-bottom:20px;
+
+}
+
+.specialty-card p{
+
+    color:#666;
+    line-height:1.9;
+    font-size:17px;
+
+}
+
+.stats{
+
+    display:flex;
+    justify-content:space-between;
+    margin-top:30px;
+    text-align:center;
+
+}
+
+.stats h4{
+
+    color:#0f56a1;
+    font-weight:bold;
+
+}
+
+.stats span{
+
+    color:#777;
+    font-size:14px;
+
+}
+
+.btn-primary{
+
+    border-radius:40px;
+    padding:12px 28px;
+
+}
+
+.tab-pane{
+
+    animation:fade .5s;
+
+}
+
+@keyframes fade{
+
+from{
+
+opacity:0;
+transform:translateY(20px);
+
+}
+
+to{
+
+opacity:1;
+transform:translateY(0);
+
+}
+
+}
+.left img{
+width:100%;
+border-radius:20px;
+box-shadow:0 15px 30px rgba(0,0,0,.2);
+}
+
+.left h2{
+margin-top:20px;
+color:#0d6efd;
+}
+
+.left p{
+margin-top:10px;
+font-size:18px;
+color:#555;
+line-height:30px;
+}
+
+.right{
+background:#fff;
+padding:30px;
+border-radius:20px;
+box-shadow:0 15px 30px rgba(0,0,0,.15);
+}
+
+.right h2{
+text-align:center;
+margin-bottom:20px;
+color:#0d6efd;
+}
+
+.form-control{
+height:50px;
+margin-bottom:15px;
+}
+
+.btn-book{
+width:100%;
+height:50px;
+font-size:18px;
+}
+
+.footer{
+margin-top:50px;
+background:#0d6efd;
+color:white;
+padding:15px;
+text-align:center;
+}
+
+#tokenBox{
+display:none;
+margin-top:25px;
+background:white;
+border-radius:15px;
+padding:20px;
+text-align:center;
+border:2px solid #28a745;
+box-shadow:0 5px 15px rgba(0,0,0,.15);
+}
+
+#tokenNumber{
+font-size:40px;
+color:#28a745;
+font-weight:bold;
+margin:15px 0;
+}
+
+.success{
+font-size:24px;
+color:#28a745;
+font-weight:bold;
+}
+
+@media(max-width:768px){
+
+.appointment{
+grid-template-columns:1fr;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+DrMeet Hospital
+</div>
+
+<div class="appointment">
+
+<div class="left">
+
+<img src="https://img.freepik.com/free-photo/doctor-with-stethoscope-hands-hospital-background_1423-1.jpg">
+
+<h2>Book Your Appointment</h2>
+
+<p>
+Our experienced doctors are here to provide the best healthcare.
+Fill in your details below and schedule your appointment easily.
+</p>
+
+</div>
+
+<div class="right">
+
+<h2>Appointment Form</h2>
+
+<form id="appointmentForm">
+
+<input
+type="text"
+id="name"
+class="form-control"
+placeholder="Full Name"
+required>
+
+<input
+type="tel"
+id="phone"
+class="form-control"
+placeholder="Phone Number"
+required>
+
+<input
+type="date"
+id="date"
+class="form-control"
+required>
+
+<input
+type="number"
+id="age"
+class="form-control"
+placeholder="Age"
+required>
+
+<input
+type="number"
+id="weight"
+class="form-control"
+placeholder="Weight (kg)"
+required>
+
+<label for="department" style="font-size:18px; margin-bottom:8px; display:block;">
+  
+</label>
+
+<select id="department" class="form-control" required>
+    <option value="">-- Select Department --</option>
+    <option value="Cardiology">Cardiology</option>
+    <option value="Neurology">Neurology</option>
+    <option value="Orthopedics">Orthopedics</option>
+    <option value="Dermatology">Dermatology</option>
+    <option value="Gastroenterology">Gastroenterology</option>
+    <option value="ENT">ENT</option>
+    <option value="General Medicine">General Medicine</option>
+    <option value="Pediatrics">Pediatrics</option>
+    <option value="Gynecology">Gynecology</option>
+</select>
+
+<button
+type="submit"
+class="btn btn-primary btn-book">
+
+<i class="fa-solid fa-calendar-check"></i>
+Book Appointment
+
+</button>
+
+</form>
+
+<div id="tokenBox">
+
+<div class="success">
+✅ Your Token is Generated!
+</div>
+
+<p style="margin-top:15px;">TOKEN NUMBER</p>
+
+<h1 id="tokenNumber"></h1>
+
+<p id="todayDate"></p>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="footer">
+© 2026 DrMeet Hospital | All Rights Reserved
+</div>
+
+<script>
+document.getElementById("appointmentForm").addEventListener("submit", async function(e) {
+
+    e.preventDefault();
+
+    const data = {
+        name: document.getElementById("name").value,
+        phone: document.getElementById("phone").value,
+        date: document.getElementById("date").value,
+        age: document.getElementById("age").value,
+        weight: document.getElementById("weight").value,
+        department: document.getElementById("department").value
+    };
+
+    try {
+
+        const response = await fetch(
+            "/generate_token?tab_id={{ tab_id }}",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            }
+        );
+
+        const result = await response.json();
+
+        console.log(result);
+
+        if (result.success) {
+
+            document.getElementById("tokenNumber").innerHTML =
+                result.token;
+
+            document.getElementById("todayDate").innerHTML =
+                new Date().toLocaleString();
+
+            document.getElementById("tokenBox").style.display =
+                "block";
+
+            // Go to Profile after 2 seconds
+            setTimeout(() => {
+
+                window.location.href =
+                    "/profile?tab_id={{ tab_id }}";
+
+            }, 2000);
+
+        } else {
+
+            alert(
+                result.error ||
+                "Appointment booking failed."
+            );
+
+        }
+
+    } catch (err) {
+
+        console.error(err);
+
+        alert(
+            "Something went wrong while booking the appointment!"
+        );
+
+    }
+
+});
+</script>
+
+
+</body>
+</html>

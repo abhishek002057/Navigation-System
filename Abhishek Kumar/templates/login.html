@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Log in · Smart Hospital Navigation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <div class="bg-pulse"></div>
+
+  <main class="auth-wrap">
+    <div class="auth-card">
+      <div class="brand auth-brand">
+        <span class="brand-mark">✚</span>
+        <div>
+          <h1>Smart Hospital Navigation</h1>
+          <p class="tagline">Log in to find your department</p>
+        </div>
+      </div>
+
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            <div class="flash-msg {{ 'flash-error' if category == 'error' else 'flash-success' }}">{{ message }}</div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+<form method="POST" class="auth-form" id="loginForm">
+
+    <!-- Login As -->
+    <label for="role">Login As</label>
+    <select id="role" name="role" required>
+        <option value="">Select User</option>
+        <option value="patient">Patient</option>
+        <option value="doctor">Doctor</option>
+        <option value="admin">Admin</option>
+    </select>
+
+    <label for="username">Username</label>
+    <input type="text" id="username" name="username" required placeholder="Enter Username">
+
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password" required placeholder="Enter Password">
+
+    <button type="submit" class="cta-btn">Log In</button>
+
+</form>
+      <p class="auth-switch">New here? <a href="{{ url_for('register') }}">Create an account</a></p>
+    </div>
+  </main>
+</body>
+</html>

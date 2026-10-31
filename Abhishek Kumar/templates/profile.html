@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ role|capitalize }} Profile</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: #edf3ff;
+        }
+
+        .wrapper {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 270px;
+            background: linear-gradient(180deg, #2563eb, #1d4ed8);
+            color: white;
+            padding: 35px 20px;
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            overflow-y: auto;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .profile-image {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .profile-image img {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            border: 6px solid white;
+            object-fit: cover;
+        }
+
+        .username {
+            text-align: center;
+            font-size: 24px;
+            font-weight: 700;
+            word-break: break-word;
+        }
+
+        .role {
+            text-align: center;
+            margin-top: 6px;
+            opacity: .8;
+        }
+
+        .menu {
+            margin-top: 40px;
+        }
+
+        .menu a {
+            display: block;
+            text-decoration: none;
+            color: white;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            transition: .3s;
+        }
+
+        .menu a:hover {
+            background: rgba(255, 255, 255, .15);
+        }
+
+        .content {
+            margin-left: 270px;
+            width: calc(100% - 270px);
+            padding: 40px;
+        }
+
+        .topbar {
+            background: white;
+            padding: 30px;
+            border-radius: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, .08);
+        }
+
+        .topbar h1 {
+            font-size: 34px;
+            color: #1e3a8a;
+        }
+
+        .topbar p {
+            margin-top: 8px;
+            color: #777;
+        }
+
+        .logout {
+            text-decoration: none;
+            background: #ef4444;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: .3s;
+        }
+
+        .logout:hover {
+            background: #dc2626;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+            margin-top: 35px;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, .08);
+            transition: .4s;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+        }
+
+        .card h2 {
+            font-size: 42px;
+            color: #2563eb;
+        }
+
+        .card p {
+            margin-top: 12px;
+            color: #666;
+        }
+
+        .blue {
+            border-left: 8px solid #2563eb;
+        }
+
+        .green {
+            border-left: 8px solid #10b981;
+        }
+
+        .orange {
+            border-left: 8px solid #f59e0b;
+        }
+
+        .red {
+            border-left: 8px solid #ef4444;
+        }
+
+        .info {
+            margin-top: 40px;
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 30px;
+        }
+
+        .left-card,
+        .right-card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, .08);
+        }
+
+        .left-card h2,
+        .right-card h2 {
+            margin-bottom: 25px;
+            color: #1e3a8a;
+        }
+
+        .detail {
+            margin-bottom: 18px;
+        }
+
+        .detail span {
+            display: block;
+            font-size: 13px;
+            color: #777;
+        }
+
+        .detail strong {
+            font-size: 18px;
+        }
+
+        .search-box {
+            margin: 20px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #searchInput {
+            width: 320px;
+            padding: 12px 18px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            outline: none;
+            font-size: 15px;
+        }
+
+        #searchInput:focus {
+            border: 2px solid #2563eb;
+        }
+
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 750px;
+        }
+
+        th {
+            padding: 16px;
+            font-size: 15px;
+            background: #2563eb;
+            color: white;
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 16px;
+            border-bottom: 1px solid #e5e7eb;
+            text-align: center;
+        }
+
+        tbody tr:hover {
+            background: #f5f9ff;
+        }
+
+        .pending {
+            background: #f59e0b;
+            color: white;
+            padding: 8px 18px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .complete {
+            background: #10b981;
+            color: white;
+            padding: 8px 18px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .cancel {
+            background: #ef4444;
+            color: white;
+            padding: 8px 18px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .approved {
+            background: #10b981;
+            color: white;
+            padding: 8px 18px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .called {
+            background: #2563eb;
+            color: white;
+            padding: 8px 18px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        @media (max-width: 1100px) {
+
+            .cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .info {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+
+            .sidebar {
+                position: relative;
+                width: 100%;
+                min-height: auto;
+            }
+
+            .wrapper {
+                display: block;
+            }
+
+            .content {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .topbar {
+                flex-direction: column;
+                gap: 20px;
+                align-items: flex-start;
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .search-box {
+                justify-content: flex-start;
+            }
+
+            #searchInput {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="wrapper">
+
+    <!-- SIDEBAR -->
+
+    <div class="sidebar">
+
+        <div class="logo">
+            SMART HOSPITAL
+        </div>
+
+        <div class="profile-image">
+            <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png">
+        </div>
+
+        <div class="username">
+            {{ username }}
+        </div>
+
+        <div class="role">
+            {{ role|capitalize }} Account
+        </div>
+
+        <div class="menu">
+
+            {% if role == "patient" %}
+
+                <a href="{{ url_for('patient_dashboard', tab_id=tab_id) }}">
+                    🏠 Dashboard
+                </a>
+
+                <a href="{{ url_for('appointment', tab_id=tab_id) }}">
+                    📅 Appointment
+                </a>
+
+                <a href="{{ url_for('predict_page', tab_id=tab_id) }}">
+                    🩺 AI Prediction
+                </a>
+
+            {% elif role == "doctor" %}
+
+                <a href="{{ url_for('doctor_dashboard', tab_id=tab_id) }}">
+                    🏠 Dashboard
+                </a>
+
+            {% elif role == "admin" %}
+
+                <a href="{{ url_for('admin_dashboard', tab_id=tab_id) }}">
+                    🏠 Dashboard
+                </a>
+
+            {% endif %}
+
+            <a href="{{ url_for('profile', tab_id=tab_id) }}">
+                👤 My Profile
+            </a>
+
+            <a href="{{ url_for('logout', tab_id=tab_id) }}">
+                🚪 Logout
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- MAIN CONTENT -->
+
+    <div class="content">
+
+        <!-- TOP BAR -->
+
+        <div class="topbar">
+
+            <div>
+
+                <h1>
+                    {{ role|capitalize }} Profile
+                </h1>
+
+                <p>
+                    Welcome back, {{ username }}
+                </p>
+
+            </div>
+
+            <a href="{{ url_for('logout', tab_id=tab_id) }}" class="logout">
+                Logout
+            </a>
+
+        </div>
+
+
+        <!-- CARDS -->
+
+        <div class="cards">
+
+            <div class="card blue">
+
+                <h2>
+                    {{ appointments|length }}
+                </h2>
+
+                <p>
+                    Total Appointments
+                </p>
+
+            </div>
+
+
+            <div class="card green">
+
+                <h2>
+                    {{ appointments[-1].token if appointments else 0 }}
+                </h2>
+
+                <p>
+                    Latest Token
+                </p>
+
+            </div>
+
+
+            <div class="card orange">
+
+                <h2>
+                    4
+                </h2>
+
+                <p>
+                    Hospital Visits
+                </p>
+
+            </div>
+
+
+            <div class="card red">
+
+                <h2>
+                    0
+                </h2>
+
+                <p>
+                    Pending Reports
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- PROFILE INFORMATION -->
+
+        <div class="info">
+
+            <!-- LEFT CARD -->
+
+            <div class="left-card">
+
+                <h2>
+                    Personal Information
+                </h2>
+
+                <div class="detail">
+
+                    <span>
+                        Username
+                    </span>
+
+                    <strong>
+                        {{ username }}
+                    </strong>
+
+                </div>
+
+
+                <div class="detail">
+
+                    <span>
+                        Email
+                    </span>
+
+                    <strong>
+                        {{ email }}
+                    </strong>
+
+                </div>
+
+
+                <div class="detail">
+
+                    <span>
+                        Role
+                    </span>
+
+                    <strong>
+                        {{ role|capitalize }}
+                    </strong>
+
+                </div>
+
+
+                <div class="detail">
+
+                    <span>
+                        Member Since
+                    </span>
+
+                    <strong>
+                        2026
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- RIGHT CARD -->
+
+            <div class="right-card">
+
+                <h2>
+                    Appointment History
+                </h2>
+
+
+                <div class="search-box">
+
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="Search by Token, Phone or Status..."
+                    >
+
+                </div>
+
+
+                <div class="table-container">
+
+                    <table id="appointmentTable">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Token</th>
+                                <th>Date</th>
+                                <th>Phone</th>
+                                <th>Status</th>
+                                <th>Department</th>
+                                <th>Doctor</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            {% if appointments %}
+
+                                {% for appointment in appointments %}
+
+                                    {% if appointment.notification %}
+
+                                        <tr class="notification-row">
+
+                                            <td colspan="6">
+
+                                                <div style="
+                                                    background:#dcfce7;
+                                                    color:#166534;
+                                                    padding:15px;
+                                                    border-radius:10px;
+                                                    margin:10px 0;
+                                                    font-weight:600;
+                                                    text-align:left;
+                                                ">
+
+                                                    🔔 {{ appointment.notification }}
+
+                                                </div>
+
+                                            </td>
+
+                                        </tr>
+
+                                    {% endif %}
+
+
+                                    <tr class="appointment-row">
+
+                                        <td>
+                                            {{ appointment.token }}
+                                        </td>
+
+                                        <td>
+                                            {{ appointment.appointment_date }}
+                                        </td>
+
+                                        <td>
+                                            {{ appointment.phone }}
+                                        </td>
+
+                                        <td>
+
+                                            {% if appointment.status == "Completed" %}
+
+                                                <span class="complete">
+                                                    Completed
+                                                </span>
+
+                                            {% elif appointment.status == "Cancelled" %}
+
+                                                <span class="cancel">
+                                                    Cancelled
+                                                </span>
+
+                                            {% elif appointment.status == "Approved" %}
+
+                                                <span class="approved">
+                                                    Approved
+                                                </span>
+
+                                            {% elif appointment.status == "Called" %}
+
+                                                <span class="called">
+                                                    Called
+                                                </span>
+
+                                            {% else %}
+
+                                                <span class="pending">
+                                                    Pending
+                                                </span>
+
+                                            {% endif %}
+
+                                        </td>
+
+                                        <td>
+
+                                            {{ appointment.department
+                                            if appointment.department
+                                            else "Not Assigned" }}
+
+                                        </td>
+
+                                        <td>
+
+                                            {% if appointment.doctor_name %}
+
+                                                {{ appointment.doctor_name }}
+
+                                            {% else %}
+
+                                                Waiting...
+
+                                            {% endif %}
+
+                                        </td>
+
+                                    </tr>
+
+                                {% endfor %}
+
+                            {% else %}
+
+                                <tr>
+
+                                    <td colspan="6"
+                                        style="
+                                        padding:40px;
+                                        text-align:center;
+                                        color:gray;
+                                        ">
+
+                                        <h2>
+                                            No Appointment Found
+                                        </h2>
+
+                                        <p>
+                                            You haven't booked any appointment yet.
+                                        </p>
+
+                                        <a href="{{ url_for('appointment', tab_id=tab_id) }}"
+                                           style="
+                                           display:inline-block;
+                                           margin-top:20px;
+                                           padding:12px 28px;
+                                           background:#2563eb;
+                                           color:white;
+                                           text-decoration:none;
+                                           border-radius:10px;
+                                           ">
+
+                                            Book Appointment
+
+                                        </a>
+
+                                    </td>
+
+                                </tr>
+
+                            {% endif %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- SEARCH JAVASCRIPT -->
+
+<script>
+
+    const input = document.getElementById("searchInput");
+
+    input.addEventListener("keyup", function () {
+
+        let filter = input.value.toUpperCase();
+
+        let rows = document.querySelectorAll(
+            "#appointmentTable tbody tr.appointment-row"
+        );
+
+        rows.forEach(function (row) {
+
+            let text = row.textContent || row.innerText;
+
+            if (text.toUpperCase().indexOf(filter) > -1) {
+
+                row.style.display = "";
+
+            } else {
+
+                row.style.display = "none";
+
+            }
+
+        });
+
+    });
+
+</script>
+
+</body>
+
+</html>
